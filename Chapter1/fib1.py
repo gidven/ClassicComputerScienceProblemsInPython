@@ -15,10 +15,33 @@
 # limitations under the License.
 
 
+#  Using flake8 linting with flake8-mypy to enable type checking
+
 def fib1(n: int) -> int:
+
+    # missing base case causes infinite recursion
+
     return fib1(n - 1) + fib1(n - 2)
 
 
+# this function is a more efficient approach
+def fib_new(n: int, result: int = 0) -> int:
+    if n < 1:  # base case
+        return result
+    else:
+        return fib_new(n-1, result+n)
+
+
 if __name__ == "__main__":
-    print(fib1(5))
-# Note that this example is purposefully wrong.
+
+    # uncomment any of the below lines to test these cases
+
+    # print(fib1(5))  # this results in max recursion depth
+
+    print(fib_new(512))  # this version is more efficient
+
+    # print(fib_new(100.1))  # flake8-mypy correctly identifies type conflict
+
+    print(fib_new(800))  # this works fine
+
+    # print(fib_new(1000))  # although it has its limits
